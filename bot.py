@@ -20,6 +20,7 @@ from telegram.ext import (
 )
 
 TOKEN = os.getenv("BOT_TOKEN")
+ADMIN_ID = 8530689522
 
 DATA_FILE = "registration_data.json"
 JOIN_REQUESTS_FILE = "join_requests.json"
@@ -253,6 +254,16 @@ async def murajaa_next(update: Update, context: ContextTypes.DEFAULT_TYPE):
         data["female_next"] += 1
 
     save_data(data)
+
+    await context.bot.send_message(
+        chat_id=ADMIN_ID,
+        text=(
+            f"ሙሉ ስም: {context.user_data['name']}\n"
+            f"የምዝገባ ኮድ: {code}\n"
+            f"ፆታ: {context.user_data['gender']}\n"
+            f"ስልክ ቁጥር: {context.user_data['phone']}"
+        )
+    )
 
     await query.message.reply_text(
         f"የምዝገባ ቁጥራችሁ፦\n\n"
