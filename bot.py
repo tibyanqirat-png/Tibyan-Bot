@@ -262,10 +262,11 @@ async def murajaa_next(update: Update, context: ContextTypes.DEFAULT_TYPE):
         chat_id=ADMIN_ID,
         text=(
             f"ሙሉ ስም: {context.user_data['name']}\n"
-            f"የምዝገባ ኮድ: {code}\n"
+            f"የምዝገባ ኮድ: <code>{code}</code>\n"
             f"ፆታ: {context.user_data['gender']}\n"
             f"ስልክ ቁጥር: {context.user_data['phone']}"
-        )
+        ),
+        Parse_mode="HTML"
     )
 
     await query.message.reply_text(
