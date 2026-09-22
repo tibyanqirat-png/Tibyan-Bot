@@ -227,13 +227,13 @@ async def murajaa_next(update: Update, context: ContextTypes.DEFAULT_TYPE):
     save_data(data)
 
     await query.message.reply_text(
-        f"{code}\n\n"
+        f"የምዝገባ ቁጥራችሁ፦\n\n"
+        f"<code>{code}</code>\n\n"
         f"ይህ የምዝገባ ቁጥራችሁ ነው {FINAL_ACCOUNT} ላይ "
         "ኮዳችሁን በመላክ ምዝገባችሁን አጠናቁ።\n\n"
         "መልካም የቂርኣት ጊዜ።",
-        parse_mode="Markdown",
+        parse_mode="HTML",
     )
-
 
 def main():
     if not TOKEN:
