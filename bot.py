@@ -2,6 +2,7 @@ import os
 import json
 from telegram import (
     Update,
+    ChatJoinRequest,
     ReplyKeyboardMarkup,
     KeyboardButton,
     InlineKeyboardButton,
@@ -20,6 +21,7 @@ from telegram.ext import (
 TOKEN = os.getenv("BOT_TOKEN")
 
 DATA_FILE = "registration_data.json"
+JOIN_REQUESTS_FILE = "join_requests.json"
 
 MALE_START = 450
 FEMALE_START = 1450
@@ -177,18 +179,39 @@ async def confirmation(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup=InlineKeyboardMarkup(keyboard),
     )
 
+async def handle_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    request = update.chat_join_request
 
+    if not request:
+        return
+
+    invite = request.invite_link
+
+    if not invite:
+        return
+
+    invite_url = invite.invite_link
+
+    if invite_url == QIRAAT_GROUP:
+        context.user_data["qiraat_requested"] = True
+
+    elif invite_url == MALE_GROUP or invite_url == FEMALE_GROUP:
+        context.user_data["murajaa_requested"] = True
+        
 async def qiraat_next(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
 
-    gender_value = context.user_data.get("gender")
-
-    if not gender_value:
+    if not context.user_data.get("qiraat_requested"):
         await query.message.reply_text(
-            "❌ የፆታ መረጃ አልተገኘም። እባክዎ /start በመጫን እንደገና ይጀምሩ።"
+            "❌ እባክዎ መጀመሪያ የቂርኣት ግሩፑን Request አድርጉ።\n\n"
+            "Request ካደረጉ በኋላ ይህን ቁልፍ እንደገና ይጫኑ።"
         )
         return
+
+    context.user_data["awaiting_murajaa_request"] = True
+
+    gender_value = context.user_data.get("gender")
 
     if gender_value == "ወንድ":
         text = (
@@ -218,6 +241,13 @@ async def murajaa_next(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
 
+    if not context.user_data.get("murajaa_requested"):
+        await query.message.reply_text(
+            "❌ እባክዎ መጀመሪያ የሙራጀዓ ግሩፑን Request አድርጉ።\n\n"
+            "Request ካደረጉ በኋላ ይህን ቁልፍ እንደገና ይጫኑ።"
+        )
+        return
+
     data = load_data()
 
     if context.user_data["gender"] == "ወንድ":
@@ -239,7 +269,6 @@ async def murajaa_next(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "መልካም የቂርኣት ጊዜ።",
         parse_mode="HTML",
     )
-
 def main():
     if not TOKEN:
         raise ValueError("BOT_TOKEN is missing!")
