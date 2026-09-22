@@ -183,20 +183,8 @@ async def confirmation(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def handle_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE):
     request = update.chat_join_request
 
-    if not request:
-        return
-
-    invite = request.invite_link
-
-    if not invite:
-        return
-
-    invite_url = invite.invite_link
-
-    if invite_url == QIRAAT_GROUP:
+    if request:
         context.user_data["qiraat_requested"] = True
-
-    elif invite_url == MALE_GROUP or invite_url == FEMALE_GROUP:
         context.user_data["murajaa_requested"] = True
         
 async def qiraat_next(update: Update, context: ContextTypes.DEFAULT_TYPE):
