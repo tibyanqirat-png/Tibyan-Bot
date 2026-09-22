@@ -142,10 +142,8 @@ async def handle_contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     context.user_data["phone"] = phone
 
-context.user_data["phone"] = phone
     name = context.user_data["name"]
     gender_value = context.user_data["gender"]
-    phone = contact.phone_number
 
     keyboard = [[
         InlineKeyboardButton("ትክክል ነው", callback_data="confirm_yes"),
@@ -160,7 +158,6 @@ context.user_data["phone"] = phone
         "ያረጋግጡ።",
         reply_markup=InlineKeyboardMarkup(keyboard),
     )
-
 
 async def confirmation(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
