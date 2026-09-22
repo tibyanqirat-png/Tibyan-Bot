@@ -17,7 +17,7 @@ from telegram.ext import (
     filters,
 )
 
-TOKEN = os.getenv("8809754014:AAGC7_xtFRBg5RPvZWJ2yFL6Rd8x9g9eRcY")
+TOKEN = os.getenv("BOT_TOKEN")
 
 DATA_FILE = "registration_data.json"
 
@@ -99,7 +99,7 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         await update.message.reply_text(
             f"ስም: {text}\n\n"
-            "2⃣ ፆታዎን ይምረጡ።",
+            "2️⃣ ፆታዎን ይምረጡ።",
             reply_markup=InlineKeyboardMarkup(keyboard),
         )
         return
@@ -119,7 +119,7 @@ async def gender(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.message.reply_text(
         f"ስም: {context.user_data['name']}\n"
         f"ፆታ: {gender_value}\n\n"
-        "3⃣ እባክዎ የስልክ ቁጥርዎን ያጋሩ።",
+        "3️⃣ እባክዎ የስልክ ቁጥርዎን ያጋሩ።",
         reply_markup=ReplyKeyboardMarkup(
             keyboard,
             resize_keyboard=True,
@@ -150,7 +150,9 @@ async def handle_contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "ያረጋግጡ።",
         reply_markup=InlineKeyboardMarkup(keyboard),
     )
-  async def confirmation(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+
+async def confirmation(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
 
@@ -251,5 +253,5 @@ def main():
     app.run_polling()
 
 
-if name == "main":
+if _name_ == "_main_":
     main()
