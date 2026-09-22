@@ -135,8 +135,12 @@ async def gender(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def handle_contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
     contact = update.message.contact
 
-    context.user_data["phone"] = contact.phone_number
+    phone = contact.phone_number
 
+if phone.startswith("251") or phone.startswith("966"):
+    phone = "+" + phone
+
+context.user_data["phone"] = phone
     name = context.user_data["name"]
     gender_value = context.user_data["gender"]
     phone = contact.phone_number
