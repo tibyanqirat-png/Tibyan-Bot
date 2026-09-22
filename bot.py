@@ -262,19 +262,20 @@ async def murajaa_next(update: Update, context: ContextTypes.DEFAULT_TYPE):
         chat_id=ADMIN_ID,
         text=(
             f"ሙሉ ስም: {context.user_data['name']}\n"
+            f"የምዝገባ ኮድ: <code>\n"
+            f"ፆታ: {context.user_data['gender']}\n"
+            f"ስልክ ቁጥር: {context.user_data['phone']}"
+        )
+    )
+
+    await context.bot.send_message(
+        chat_id=ADMIN_ID,
+        text=(
+            f"ሙሉ ስም: {context.user_data['name']}\n"
             f"የምዝገባ ኮድ: <code>{code}</code>\n"
             f"ፆታ: {context.user_data['gender']}\n"
             f"ስልክ ቁጥር: {context.user_data['phone']}"
         ),
-        Parse_mode="HTML"
-    )
-
-    await query.message.reply_text(
-        f"የምዝገባ ቁጥራችሁ፦\n\n"
-        f"<code>{code}</code>\n\n"
-        f"ይህ የምዝገባ ቁጥራችሁ ነው {FINAL_ACCOUNT} ላይ "
-        "ኮዳችሁን በመላክ ምዝገባችሁን አጠናቁ።\n\n"
-        "መልካም የቂርኣት ጊዜ።",
         parse_mode="HTML",
     )
 def main():
