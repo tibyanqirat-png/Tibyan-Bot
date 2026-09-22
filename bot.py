@@ -137,8 +137,10 @@ async def handle_contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     phone = contact.phone_number
 
-if phone.startswith("251") or phone.startswith("966"):
-    phone = "+" + phone
+    if phone.startswith("251") or phone.startswith("966"):
+        phone = "+" + phone
+
+    context.user_data["phone"] = phone
 
 context.user_data["phone"] = phone
     name = context.user_data["name"]
