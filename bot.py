@@ -19,7 +19,7 @@ from telegram.ext import (
     filters,
 )
 
-TOKEN = os.getenv("BOT_TOKEN")
+TOKEN = os.getenv("8696093032:AAFNxBS5H_CnFtD2dlzCvYgYW6QTky_VIiI")
 
 DATA_FILE = "registration_data.json"
 JOIN_REQUESTS_FILE = "join_requests.json"
