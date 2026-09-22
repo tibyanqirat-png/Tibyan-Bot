@@ -280,6 +280,7 @@ def main():
     app.add_handler(CallbackQueryHandler(confirmation, pattern="^confirm_"))
     app.add_handler(CallbackQueryHandler(qiraat_next, pattern="^qiraat_next$"))
     app.add_handler(CallbackQueryHandler(murajaa_next, pattern="^murajaa_next$"))
+    app.add_handler(ChatJoinRequestHandler(handle_join_request))
 
     app.add_handler(MessageHandler(filters.CONTACT, handle_contact))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
