@@ -258,26 +258,26 @@ async def murajaa_next(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     save_data(data)
 
+    # First send the registration code to the student
+    await query.message.reply_text(
+        f"የምዝገባ ቁጥራችሁ፦\n\n"
+        f"<code>{code}</code>\n\n"
+        f"ይህ የምዝገባ ቁጥራችሁ ነው {FINAL_ACCOUNT} ላይ "
+        "ኮዳችሁን በመላክ ምዝገባችሁን አጠናቁ።\n\n"
+        "መልካም የቂርኣት ጊዜ።",
+        parse_mode="HTML",
+    )
+
+    # Then send the student's data to the admin
     await context.bot.send_message(
         chat_id=ADMIN_ID,
         text=(
             f"ሙሉ ስም: {context.user_data['name']}\n"
-            f"የምዝገባ ኮድ: <code>\n"
+            f"የምዝገባ ኮድ: {code}\n"
             f"ፆታ: {context.user_data['gender']}\n"
             f"ስልክ ቁጥር: {context.user_data['phone']}"
         )
-    )
-
-    await context.bot.send_message(
-        chat_id=ADMIN_ID,
-        text=(
-            f"ሙሉ ስም: {context.user_data['name']}\n"
-            f"የምዝገባ ኮድ: <code>{code}</code>\n"
-            f"ፆታ: {context.user_data['gender']}\n"
-            f"ስልክ ቁጥር: {context.user_data['phone']}"
-        ),
-        parse_mode="HTML",
-    )
+    ))
 def main():
     if not TOKEN:
         raise ValueError("BOT_TOKEN is missing!")
