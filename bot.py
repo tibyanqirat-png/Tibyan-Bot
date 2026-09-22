@@ -277,7 +277,7 @@ async def murajaa_next(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"ፆታ: {context.user_data['gender']}\n"
             f"ስልክ ቁጥር: {context.user_data['phone']}"
         )
-    ))
+    )
 def main():
     if not TOKEN:
         raise ValueError("BOT_TOKEN is missing!")
