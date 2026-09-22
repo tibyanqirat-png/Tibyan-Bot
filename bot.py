@@ -182,7 +182,13 @@ async def qiraat_next(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
 
-    gender_value = context.user_data["gender"]
+    gender_value = context.user_data.get("gender")
+
+    if not gender_value:
+        await query.message.reply_text(
+            "❌ የፆታ መረጃ አልተገኘም። እባክዎ /start በመጫን እንደገና ይጀምሩ።"
+        )
+        return
 
     if gender_value == "ወንድ":
         text = (
@@ -207,7 +213,6 @@ async def qiraat_next(update: Update, context: ContextTypes.DEFAULT_TYPE):
         text,
         reply_markup=InlineKeyboardMarkup(keyboard),
     )
-
 
 async def murajaa_next(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
