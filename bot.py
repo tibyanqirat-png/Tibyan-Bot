@@ -183,9 +183,13 @@ async def confirmation(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def handle_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE):
     request = update.chat_join_request
 
-    if request:
-        context.user_data["qiraat_requested"] = True
+    if not request:
+        return
+
+    if context.user_data.get("awaiting_murajaa_request"):
         context.user_data["murajaa_requested"] = True
+    else:
+        context.user_data["qiraat_requested"] = True
         
 async def qiraat_next(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
